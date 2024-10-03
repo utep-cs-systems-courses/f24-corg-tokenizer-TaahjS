@@ -5,7 +5,7 @@
 
 int main(){
   while(1){
-    printf("Welcome to the program. Please input a string\n>");
+    printf("Welcome to the program.If you'd like to exit, please type END. Otherwise, input a string to tokenize.\n>");
     int c, i = 0;
     char userInput[100];
     do{
@@ -18,6 +18,9 @@ int main(){
     }while(c != '\n'); //if c = \n we will assume the person has pressed "enter" to end their input
    endInput:
     userInput[i] = 0;
+    if(userInput[0] == 'E' && userInput[1] == 'N' && userInput[2] == 'D'){
+      goto out;
+    }
    printf("The user has input: ");
    for(int j = 0; j < (sizeof(userInput) / sizeof(char)); j++){
      if((i != 99 && i == j) || userInput[j] == 0){
@@ -40,8 +43,7 @@ int main(){
    printf("Copying 3 characters from userInput: %s\n\n", copy_str(&userInput[0], 3));
 
    print_tokens(tokenize(&userInput[0]));
-   
-   goto out;
+   printf("\n");
   }
  out:
   return 0;
