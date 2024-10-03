@@ -1,0 +1,14 @@
+CFLAGS=-g
+
+all: tokenizemain
+
+tokenizemain.o: tokenizer.h
+
+tokenizemain: tokenizemain.o
+	cc -o $@ $^ $(CFLAGS)
+
+clean:
+	rm -f *.o tokenizemain
+
+run:tokenizemain
+	./tokenizemain

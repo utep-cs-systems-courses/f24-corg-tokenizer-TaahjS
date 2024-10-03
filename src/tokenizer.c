@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "tokenizer.h"
+
+int space_char(char c){
+  if(c == ' ' || c == '\n' || c == '\t'){
+    return 1;
+  }
+  return 0; //we return if we hit 0 because it marks the end of our array
+}
+
+int non_space_char(char c){
+  if(c == ' ' || c == '\n' || c == '\t' || c == '0'){
+    return 0;
+  }
+  return 1;
+}
+
+//str points to the array of an index in the array
+//array indices are next to one another
+//look for beginning of next word
+char *token_start(char *str){
+  char arrayEnd = 0;
+  char *ptr = &arrayEnd;
+  int i = 0;
+  while(1){
+    if(*(str + i) == 0){ //this means we have hit the end of the array
+      goto end;
+    }
+    if(space_char(*(str + i))){ //this indicates we've escaped our current token
+      while(1){
+	if(non_space_char(*(str + i))){
+	  ptr = str + i;
+	  goto end;
+	}else if(*(str + i) == 0){ //this happens if the string ends in white space
+	  goto end;
+	}else{
+	  i++;
+	}
+      }
+      goto end;
+    }
+    i++;
+  }
+ end:
+  return ptr;
+}
+
+char *token_terminator(char *token){
+  int i = 0;
+  char *ptr;
+  while(1){
+    if(non_space_char(*(token + i))){
+      i++;
+    }else{
+      ptr = token + i;
+      return ptr;
+    }
+  }
+}
+
+int count_tokens(char *str){
+  int count = 0;
+  if(non_space_char(*str)){
+    count++;
+  }
+  int i = 0; //keeps track of index
+  char *ptr = str;
+ loop:
+  ptr = token_start(ptr);
+  if(*ptr != 0){
+    count++;
+    goto loop;
+  }else{  
+    return count;
+  }
+}
+
+//inStr is the userInput, len is the number of chars you want to be in new string
+char *copy_str(char *inStr, short len){
+  char *copy =(char*) malloc((len + 1)*sizeof(char));
+  for(int i = 0; i < len; i++){
+    copy[i] = *(inStr + i);
+  }
+  copy[len] = '0';
+  return copy;
+}
+
+
