@@ -10,7 +10,7 @@ int space_char(char c){
 }
 
 int non_space_char(char c){
-  if(c == ' ' || c == '\n' || c == '\t' || c == '0'){
+  if(c == ' ' || c == '\n' || c == '\t' || c == 0){
     return 0;
   }
   return 1;
@@ -78,12 +78,47 @@ int count_tokens(char *str){
 
 //inStr is the userInput, len is the number of chars you want to be in new string
 char *copy_str(char *inStr, short len){
-  char *copy =(char*) malloc((len + 1)*sizeof(char));
+  char *copy = malloc((len + 1) * sizeof(char));
   for(int i = 0; i < len; i++){
     copy[i] = *(inStr + i);
   }
-  copy[len] = '0';
+  copy[len] = 0;
   return copy;
 }
 
+char **tokenize(char* str){
+  char numTokens = count_tokens(str);
+  char **tokenArray = malloc((numTokens + 1) * sizeof(char));
+  for(int i = 0; i < numTokens; i++){
+    char *wordStart = str;
+    for(int j = 0; j < i; j++){
+      wordStart = token_start(wordStart);
+    }
+    char *wordEnd = token_terminator(wordStart);
+    tokenArray[i] = copy_str(wordStart, wordEnd-wordStart);
+  }
+  tokenArray[numTokens] = 0;
+  return tokenArray;
+}
 
+void print_tokens(char **tokens){
+  printf("Printing out tokens: \n");
+  int numTokens = sizeof(*tokens)/sizeof(char);
+  for(int i = 0; i < numTokens; i++){
+    if(!tokens[i]){
+      free_tokens(tokens);
+      return;
+    }
+    printf("%s\n", tokens[i]);
+  }
+}
+
+void free_tokens(char **tokens){
+  int i = 0;
+  while(tokens[i] != NULL){
+    free(tokens[i]);
+    i++;
+  }
+  free(tokens);
+  printf("\nFreed tokens.\n");
+}

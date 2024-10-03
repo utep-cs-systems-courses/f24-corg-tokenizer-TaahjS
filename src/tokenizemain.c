@@ -17,10 +17,10 @@ int main(){
       }
     }while(c != '\n'); //if c = \n we will assume the person has pressed "enter" to end their input
    endInput:
-    userInput[i] = '0';
+    userInput[i] = 0;
    printf("The user has input: ");
    for(int j = 0; j < (sizeof(userInput) / sizeof(char)); j++){
-     if((i != 99 && i == j) || userInput[j] == '0'){
+     if((i != 99 && i == j) || userInput[j] == 0){
        goto endPrint;
      }
      printf("%c", userInput[j]);
@@ -36,6 +36,10 @@ int main(){
    printf("The value at the address is: %c\n\n", *(token_start(&userInput[0])));
 
    printf("The number of tokens in the string is: %d\n\n", count_tokens(&userInput[0]));
+
+   printf("Copying 3 characters from userInput: %s\n\n", copy_str(&userInput[0], 3));
+
+   print_tokens(tokenize(&userInput[0]));
    
    goto out;
   }
