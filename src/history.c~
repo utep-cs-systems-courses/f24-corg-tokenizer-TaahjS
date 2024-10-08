@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "history.h"
+
+List* init_histry(){
+  List *history = malloc(sizeof(List));
+  Item first;
+  history->root = *first;
+  return history;
+}
+
+void add_history(List *list, char *str){
+  int currID = 1;
+  Item *ptr = list->root;
+  while(*ptr){
+    *ptr = ptr->next;
+    currID++;
+  }
+  Item newNode = malloc(sizeof(Item));
+  newNode->id = currID;
+  newNode->str = str;
+  newNode->next = 0;
+  *ptr = newNode;
+}

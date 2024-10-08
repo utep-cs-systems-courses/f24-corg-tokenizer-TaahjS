@@ -87,7 +87,7 @@ char *copy_str(char *inStr, short len){
 }
 
 char **tokenize(char* str){
-  char numTokens = count_tokens(str);
+  char numTokens = count_tokens(str); //if we add 1, it prints out something when 4+?
   char **tokenArray = malloc((numTokens + 1) * sizeof(char));
   for(int i = 0; i < numTokens; i++){
     char *wordStart = str;
@@ -101,6 +101,7 @@ char **tokenize(char* str){
   return tokenArray;
 }
 
+//when we reach 4 tokens, it omits the first token while printing
 void print_tokens(char **tokens){
   printf("Printing out tokens: \n");
   int numTokens = sizeof(*tokens)/sizeof(char);
@@ -113,12 +114,14 @@ void print_tokens(char **tokens){
   }
 }
 
+//anything beyond 2 tokens breaks
 void free_tokens(char **tokens){
   int i = 0;
-  while(tokens[i] != NULL){
+  while(i != sizeof(*tokens)/sizeof(char)){
     free(tokens[i]);
     i++;
   }
+  printf("Bone");
   free(tokens);
   printf("\nFreed tokens.\n");
 }

@@ -5,7 +5,7 @@
 
 int main(){
   while(1){
-    printf("Welcome to the program.If you'd like to exit, please type END. Otherwise, input a string to tokenize.\n>");
+    printf("Welcome to the program.If you'd like to exit, type END. Otherwise, give a string to tokenize.\n>");
     int c, i = 0;
     char userInput[100];
     do{
