@@ -79,6 +79,10 @@ int count_tokens(char *str){
 //inStr is the userInput, len is the number of chars you want to be in new string
 char *copy_str(char *inStr, short len){
   char *copy = malloc((len + 1) * sizeof(char));
+  if(copy == NULL){
+    printf("Copy String: Failed to allocate memory.");
+    return NULL;
+  }
   for(int i = 0; i < len; i++){
     copy[i] = *(inStr + i);
   }
@@ -89,6 +93,10 @@ char *copy_str(char *inStr, short len){
 char **tokenize(char* str){
   char numTokens = count_tokens(str); //if we add 1, it prints out something when 4+?
   char **tokenArray = malloc((numTokens + 1) * sizeof(char));
+  if(tokenArray == NULL){
+    printf("Tokenize: Failed to allocate memory.");
+    return NULL;
+  }
   for(int i = 0; i < numTokens; i++){
     char *wordStart = str;
     for(int j = 0; j < i; j++){
@@ -107,7 +115,6 @@ void print_tokens(char **tokens){
   int numTokens = sizeof(*tokens)/sizeof(char);
   for(int i = 0; i < numTokens; i++){
     if(!tokens[i]){
-      free_tokens(tokens);
       return;
     }
     printf("%s\n", tokens[i]);
@@ -116,12 +123,12 @@ void print_tokens(char **tokens){
 
 //anything beyond 2 tokens breaks
 void free_tokens(char **tokens){
+  printf("Landed");
   int i = 0;
   while(i != sizeof(*tokens)/sizeof(char)){
     free(tokens[i]);
     i++;
   }
-  printf("Bone");
   free(tokens);
   printf("\nFreed tokens.\n");
 }

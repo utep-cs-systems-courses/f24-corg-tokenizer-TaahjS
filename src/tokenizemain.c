@@ -42,7 +42,10 @@ int main(){
 
    printf("Copying 3 characters from userInput: %s\n\n", copy_str(&userInput[0], 3));
 
-   print_tokens(tokenize(&userInput[0]));
+   char **tokens = tokenize(&userInput[0]);
+   print_tokens(tokens);
+   free_tokens(tokens);
+   
    printf("\n");
   }
  out:
