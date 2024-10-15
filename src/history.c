@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "history.h"
 
-List* init_histry(){
+List* init_history(){
   List *history = malloc(sizeof(List));
   Item *first;
   history->root = first;
@@ -44,6 +44,41 @@ char *get_history(List *list, int id){
   return 0;
 }
 
-void print_history(List *list);
+void print_history(List *list){
 
-void free_history(List *list);
+  if(list == NULL){
+
+    printf("List is empty");
+
+    return;
+
+  }
+
+  Item *curr = list->root;
+
+  while(curr != NULL){
+
+    printf("%d. %s\n", curr->id, curr->str);
+
+    curr = curr->next;
+
+  }
+}
+ void free_history(List *list){
+   Item *curr = list->root;
+
+   while (curr != NULL){
+
+     Item *currPtr = curr;
+
+     curr = curr->next;
+
+     free(currPtr->str);
+
+     free(currPtr);
+
+   }
+
+   free(list);
+
+ }
